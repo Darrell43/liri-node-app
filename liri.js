@@ -1,21 +1,18 @@
 require("dotenv").config();
 
-console.log(process.env.TWITTER_CONSUMER_KEY);
-
-var Twitter = require('./keys');
-var Spotify = require('./keys');
+var music = require("./keys");
+var Twitter = require('twitter');
 
 
+var spotify = new Spotify(keys.spotify);
+var client = new Twitter(keys.twitter);
 
-spotify
-  .request('https://api.spotify.com')
-  .then(function(data) {
-    console.log(data); 
-  })
-  .catch(function(err) {
-    console.error('Error occurred: ' + err); 
-  });
-
+var params = {screen_name: 'nodejs'};
+client.get('statuses/user_timeline', params, function(error, tweets, response) {
+  if (!error) {
+    console.log(tweets);
+  }
+});
 
 
 
